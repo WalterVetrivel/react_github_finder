@@ -1,21 +1,23 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
-
-import Spinner from '../layout/Spinner';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCheck, faTimesCircle} from '@fortawesome/free-solid-svg-icons';
+
+import Spinner from '../layout/Spinner';
+import Repos from '../repos/Repos';
 
 class User extends Component {
 	static propTypes = {
 		loading: PropTypes.bool,
 		user: PropTypes.object.isRequired,
-		getUser: PropTypes.func.isRequired
+		getUser: PropTypes.func.isRequired,
+		getUserRepos: PropTypes.func.isRequired
 	};
 
 	async componentDidMount() {
-		console.log(this.props.match.params.username);
 		await this.props.getUser(this.props.match.params.username);
+		await this.props.getUserRepos(this.props.match.params.username);
 	}
 
 	render() {
@@ -35,7 +37,7 @@ class User extends Component {
 			hireable
 		} = this.props.user;
 
-		const {loading} = this.props;
+		const {loading, repos} = this.props;
 
 		return !loading ? (
 			<div>
@@ -100,6 +102,10 @@ class User extends Component {
 					<div className="badge badge-success">Following: {following}</div>
 					<div className="badge badge-light">Public Repos: {public_repos}</div>
 					<div className="badge badge-dark">Public Gists: {public_gists}</div>
+				</div>
+				<div>
+					<h3 className="mt-2">Latest Repos</h3>
+					<Repos repos={repos} />
 				</div>
 			</div>
 		) : (
