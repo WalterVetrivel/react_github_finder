@@ -29,7 +29,7 @@ const Alert = ({alert, onClose}) => {
 };
 
 Alert.propTypes = {
-	alert: PropTypes.object.isRequired,
+	alert: PropTypes.object,
 	onClose: PropTypes.func.isRequired
 };
 
