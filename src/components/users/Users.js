@@ -9,8 +9,10 @@ const Users = ({loading, users}) => {
 		<div style={userStyle}>
 			{loading ? (
 				<Spinner />
-			) : (
+			) : users.length > 0 ? (
 				users.map(user => <UserItem key={user.id} user={user} />)
+			) : (
+				<h4>Enter query to search...</h4>
 			)}
 		</div>
 	);
