@@ -8,13 +8,15 @@ import './App.css';
 
 class App extends Component {
 	state = {
-		users: []
+		users: [],
+		loading: false
 	};
 
 	async componentDidMount() {
 		try {
+			this.setState({loading: true});
 			const result = await axios.get('https://api.github.com/users');
-			this.setState({users: [...result.data]});
+			this.setState({users: result.data, loading: false});
 		} catch (err) {
 			console.error(err.message);
 		}
@@ -25,7 +27,7 @@ class App extends Component {
 			<div className="App">
 				<Navbar />
 				<div className="container">
-					<Users users={this.state.users} />
+					<Users loading={this.state.loading} users={this.state.users} />
 				</div>
 			</div>
 		);
