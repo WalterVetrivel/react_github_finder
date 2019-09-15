@@ -1,16 +1,18 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useContext} from 'react';
 import {Link} from 'react-router-dom';
-import PropTypes from 'prop-types';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCheck, faTimesCircle} from '@fortawesome/free-solid-svg-icons';
+
+import GithubContext from '../../context/github/githubContext';
 
 import Spinner from '../layout/Spinner';
 import Repos from '../repos/Repos';
 
-const User = ({getUser, getUserRepos, match, user, loading, repos}) => {
+const User = ({match}) => {
+	const githubContext = useContext(GithubContext);
 	useEffect(() => {
-		getUser(match.params.username);
-		getUserRepos(match.params.username);
+		githubContext.getUser(match.params.username);
+		githubContext.getRepos(match.params.username);
 		// eslint-disable-next-line
 	}, []);
 
@@ -28,9 +30,9 @@ const User = ({getUser, getUserRepos, match, user, loading, repos}) => {
 		public_repos,
 		public_gists,
 		hireable
-	} = user;
+	} = githubContext.user;
 
-	return !loading ? (
+	return !githubContext.loading ? (
 		<div>
 			<Link to="/">Back to search</Link>
 			<p>
@@ -96,19 +98,12 @@ const User = ({getUser, getUserRepos, match, user, loading, repos}) => {
 			</div>
 			<div>
 				<h3 className="mt-2">Latest Repos</h3>
-				<Repos repos={repos} />
+				<Repos />
 			</div>
 		</div>
 	) : (
 		<Spinner />
 	);
-};
-
-User.propTypes = {
-	loading: PropTypes.bool,
-	user: PropTypes.object.isRequired,
-	getUser: PropTypes.func.isRequired,
-	getUserRepos: PropTypes.func.isRequired
 };
 
 export default User;
