@@ -1,5 +1,4 @@
 import React, {useContext} from 'react';
-import PropTypes from 'prop-types';
 import {faInfoCircle} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
@@ -30,11 +29,6 @@ const Alert = () => {
 			</div>
 		)
 	);
-};
-
-Alert.propTypes = {
-	alert: PropTypes.object,
-	onClose: PropTypes.func.isRequired
 };
 
 export default Alert;
