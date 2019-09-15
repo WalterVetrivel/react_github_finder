@@ -1,9 +1,13 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import PropTypes from 'prop-types';
 import {faInfoCircle} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
-const Alert = ({alert, onClose}) => {
+import AlertContext from '../../context/alert/alertContext';
+
+const Alert = () => {
+	const {alert, removeAlert} = useContext(AlertContext);
+
 	return (
 		alert !== null && (
 			<div
@@ -20,7 +24,7 @@ const Alert = ({alert, onClose}) => {
 						fontSize: '1.5rem',
 						color: '#777'
 					}}
-					onClick={onClose}>
+					onClick={removeAlert}>
 					X
 				</span>
 			</div>
